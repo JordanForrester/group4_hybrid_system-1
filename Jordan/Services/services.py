@@ -34,8 +34,7 @@ def storeMessages():
                 data = base64.urlsafe_b64decode(p["body"]["data"]).decode("utf-8")
                 print(data)
                 print("\n")
-                #cursor.execute("""INSERT INTO EMAILS VALUES (msg)""", 
-                #(data))
+                
 
         email = emailClass.emailClass("Email", data)
     
