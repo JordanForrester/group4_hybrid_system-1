@@ -32,6 +32,7 @@ def storeMessages(response):#This function encapsulates emails from searchMessag
                 
 
         header = messData['headers']
+        #print(header)
         messageArray.append(Email(mess['id'], header, body))
 
         return messageArray    
