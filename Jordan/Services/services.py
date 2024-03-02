@@ -2,40 +2,45 @@
 from authorize import get_Service
 #from db_services import db_connect
 import base64
-import emailClass
+from emailClass import Email
 
 CONST_GMAIL_API = get_Service()
 
 
-def getUserInfo():
-    return(CONST_GMAIL_API.users().getProfile(userId='me').execute() )
-
-
-def fetchMessages():
-    return(CONST_GMAIL_API.users().messages().list(userId='me').execute())
-
 
 def searchMessages(search):
-    return(CONST_GMAIL_API.users().messages().list(userId='me', q = search).execute())
+    return(storeMessages((CONST_GMAIL_API.users().messages().list(userId='me', q = search).execute())))
 
 
 
-def storeMessages():
-    #connect = db_connect()
-    #cursor = connect.cursor()
-    #cursor.execute("USE forrestj3_db")
-    #connect.commit()
-    response = fetchMessages()
+def storeMessages(response):#This function encapsulates emails from searchMessages's response
+                            # An array of Email objects is returned
+   
+    messageArray = []
+    body = ""
 
-    for mess in response["messages"]:
-        resp = CONST_GMAIL_API.users().messages().get(userId='me', id = mess["id"],).execute()
-        for p in resp["payload"]["parts"]:
+    for mess in response["messages"]:#Error Checking for empty returns
+
+        rsp = CONST_GMAIL_API.users().messages().get(userId='me', id = mess['id'],).execute()
+        messData = rsp["payload"]
+        
+        
+        for p in messData['parts']:
+
             if p["mimeType"] in ["text/plain"]:
-                data = base64.urlsafe_b64decode(p["body"]["data"]).decode("utf-8")
-                print(data)
-                print("\n")
+                body = base64.urlsafe_b64decode(p["body"]["data"]).decode("utf-8")
                 
 
-        email = emailClass.emailClass("Email", data)
+        header = messData['headers']
+        messageArray.append(Email(mess['id'], header, body))
+
+        return messageArray    
+        
+
+
+                
+                
+
+        
     
-# 
+
