@@ -32,8 +32,8 @@ class Widget1():
         self.button1 = Button(self.w1, text = "Search", font = tkinter.font.Font(family = "Verdana", size = 12), cursor = "arrow", state = "normal")
         self.button1.place(x = 800, y = 50, width = 200, height = 40)
         self.button1['command'] = self.search_email
-        self.text1 = Text(self.w1, font = tkinter.font.Font(family = "Verdana", size = 12), cursor = "arrow", state = "normal")
-        self.text1.place(x = 300, y = 230, width = 400, height = 470)
+        self.resultbox = Text(self.w1, font = tkinter.font.Font(family = "Verdana", size = 12), cursor = "arrow", state = "normal")
+        self.resultbox.place(x = 300, y = 230, width = 400, height = 470)
         self.ltext1 = Entry(self.w1, font = tkinter.font.Font(family = "Verdana", size = 12), state = "normal")
         self.ltext1.place(x = 170, y = 50, width = 200, height = 40)
         self.label1 = Label(self.w1, text = "Keyword:", anchor='w', font = tkinter.font.Font(family = "Verdana", size = 12), cursor = "arrow", state = "normal")
@@ -53,6 +53,10 @@ class Widget1():
         self.label4.place(x = 300, y = 170, width = 200, height = 22)
         self.text3 = Text(self.w1, font = tkinter.font.Font(family = "Verdana", size = 12), cursor = "arrow", state = "normal")
         self.text3.place(x = 800, y = 230, width = 400, height = 470)
+        
+        self.ExampleButton = Button(self.w1, text = "Button", bg = "#e6e6e6", font = tkinter.font.Font(family = "Bahnschrift Light", size = 10), cursor = "arrow", state = "normal")
+        self.ExampleButton.place(x = 300, y = 230, width = 400, height = 62)
+        self.ExampleButton['command'] = self.show_message
 
     def print_test(self):
         input = self.ltext1.get()
@@ -67,7 +71,23 @@ class Widget1():
 
     def search_email(self):
         input = self.ltext1.get()
-        print(searchMessages(input))
+        arr = searchMessages(input)
+        
+        for email in arr:
+            #self.textLabel = 
+            self.ExampleButton = Button(self.w1, text = "Button", bg = "#e6e6e6", font = tkinter.font.Font(family = "Bahnschrift Light", size = 10), cursor = "arrow", state = "normal", name = email.name)
+        self.ExampleButton.place(x = 300, y = 230, width = 400, height = 62)
+        self.ExampleButton['command'] = self.show_message
+        self.ExampleButton.name
+
+    def show_message(self):
+        print('show_message')
+        
+        
+
+    
+        
+             
         
              
 
