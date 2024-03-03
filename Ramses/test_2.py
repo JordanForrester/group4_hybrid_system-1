@@ -14,11 +14,34 @@ sys.path.append('../Jordan/Services/')
 from services import searchMessages # This code gets the method for making API request
 sys.path.append(temp)
 
+class emaildisplay():
+    def __init__(self, parent, emailObject):
+        self.gui(parent, emailObject)
+        
 
+    def gui(self, parent, emailObject):
+        if parent == 0:
+            self.w1 = Tk()
+            self.w1.configure(bg = '#e2e2e2')
+            self.w1.geometry('500x450')
+        else:
+            self.w1 = Frame(parent)
+            self.w1.configure(bg = '#e2e2e2')
+            self.w1.place(x = 0, y = 0, width = 500, height = 450)
+        self.messagelabel = Label(self.w1, text = emailObject.message, anchor='w', font = tkinter.font.Font(family = "Calibri", size = 9), cursor = "arrow", state = "normal")
+        self.messagelabel.place(x = 0, y = 160, width = 500, height = 292)
+        self.senderlabel = Label(self.w1, text = "From: " + emailObject.sender, anchor='w', font = tkinter.font.Font(family = "Calibri", size = 9), cursor = "arrow", state = "normal")
+        self.senderlabel.place(x = 0, y = 0, width = 500, height = 32)
+        self.subjectlabel = Label(self.w1, text = "Subject: " + emailObject.subject, anchor='w', font = tkinter.font.Font(family = "Calibri", size = 9), cursor = "arrow", state = "normal")
+        self.subjectlabel.place(x = 0, y = 30, width = 500, height = 32)
+        self.tolabel = Label(self.w1, text = "Recipients:" + emailObject.receiver, anchor='w', font = tkinter.font.Font(family = "Calibri", size = 9), cursor = "arrow", state = "normal")
+        self.tolabel.place(x = 0, y = 70, width = 500, height = 32)
 
 class Widget1():
     def __init__(self, parent):
         self.gui(parent)
+        self.button_list = []
+        
 
     def gui(self, parent):
         if parent == 0:
@@ -53,10 +76,6 @@ class Widget1():
         self.label4.place(x = 300, y = 170, width = 200, height = 22)
         self.text3 = Text(self.w1, font = tkinter.font.Font(family = "Verdana", size = 12), cursor = "arrow", state = "normal")
         self.text3.place(x = 800, y = 230, width = 400, height = 470)
-        
-        self.ExampleButton = Button(self.w1, text = "Button", bg = "#e6e6e6", font = tkinter.font.Font(family = "Bahnschrift Light", size = 10), cursor = "arrow", state = "normal")
-        self.ExampleButton.place(x = 300, y = 230, width = 400, height = 62)
-        self.ExampleButton['command'] = self.show_message
 
     def print_test(self):
         input = self.ltext1.get()
@@ -71,17 +90,31 @@ class Widget1():
 
     def search_email(self):
         input = self.ltext1.get()
-        arr = searchMessages(input)
+        global entrylist
+        entrylist = searchMessages(input)
+        offSet = 0
         
-        for email in arr:
-            #self.textLabel = 
-            self.ExampleButton = Button(self.w1, text = "Button", bg = "#e6e6e6", font = tkinter.font.Font(family = "Bahnschrift Light", size = 10), cursor = "arrow", state = "normal", name = email.name)
-        self.ExampleButton.place(x = 300, y = 230, width = 400, height = 62)
-        self.ExampleButton['command'] = self.show_message
-        self.ExampleButton.name
+        for email in entrylist:
+            print(email)
+            button = Button(self.w1, text = "Subject: " + email.subject + " Sender: " + email.sender, bg = "#e6e6e6", font = tkinter.font.Font(family = "Bahnschrift Light", size = 8), cursor = "arrow", state = "normal",)
+            button.place(x = 300, y = (230 + offSet), width = 400, height = 62)
+            button['command'] = lambda b = button: self.show_message(b)
+            button._name = email.id
+            print(offSet)
+            offSet += 68
+            self.button_list.append(button)
+            
 
-    def show_message(self):
-        print('show_message')
+    def show_message(self, button):
+        print(button)
+        for email in entrylist: #Find a better way to get the button we need
+            if button._name == email.id:
+                window = emaildisplay(0, email)
+                break
+                    
+            
+                
+        
         
         
 
@@ -94,3 +127,6 @@ class Widget1():
 if __name__ == '__main__':
     a = Widget1(0)
     a.w1.mainloop()
+
+
+

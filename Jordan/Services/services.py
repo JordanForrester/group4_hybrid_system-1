@@ -18,24 +18,26 @@ def storeMessages(response):#This function encapsulates emails from searchMessag
    
     messageArray = []
     body = ""
+    
 
     for mess in response["messages"]:#Error Checking for empty returns
-
+        
+        
         rsp = CONST_GMAIL_API.users().messages().get(userId='me', id = mess['id'],).execute()
+        
         messData = rsp["payload"]
-        
-        
-        for p in messData['parts']:
+       
+        if 'parts' in messData:
 
-            if p["mimeType"] in ["text/plain"]:
-                body = base64.urlsafe_b64decode(p["body"]["data"]).decode("utf-8")
-                
+            for p in messData['parts']:
 
-        header = messData['headers']
-        #print(header)
-        messageArray.append(Email(mess['id'], header, body))
+                if p["mimeType"] in ["text/plain"]:
+                    body = base64.urlsafe_b64decode(p["body"]["data"]).decode("utf-8")
+            header = messData['headers']
+            #print(header)
+            messageArray.append(Email(mess['id'], header, body))
 
-        return messageArray    
+    return messageArray    
         
 
 
