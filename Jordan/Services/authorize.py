@@ -9,7 +9,7 @@ def get_Service():
 
     
    
-    CLIENT_FILE = '../Jordan/Services/client.json' #'client.json',
+    CLIENT_FILE = '../Jordan/Services/client.json' #'client.json'
     API_NAME = 'gmail'
     API_VERSION = 'v1'
     SCOPES = ['https://mail.google.com/']

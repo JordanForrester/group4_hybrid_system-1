@@ -41,7 +41,6 @@ class Widget1():
     def __init__(self, parent):
         self.gui(parent)
         self.button_list = []
-        
 
     def gui(self, parent):
         if parent == 0:
@@ -52,7 +51,7 @@ class Widget1():
             self.w1 = Frame(parent)
             self.w1.configure(bg = '#414141')
             self.w1.place(x = 0, y = 0, width = 1280, height = 720)
-        self.button1 = Button(self.w1, text = "Search", font = tkinter.font.Font(family = "Verdana", size = 12), cursor = "arrow", state = "normal")
+        self.button1 = Button(self.w1, text = "Search Email", font = tkinter.font.Font(family = "Verdana", size = 12), cursor = "arrow", state = "normal")
         self.button1.place(x = 800, y = 50, width = 200, height = 40)
         self.button1['command'] = self.search_email
         self.resultbox = Text(self.w1, font = tkinter.font.Font(family = "Verdana", size = 12), cursor = "arrow", state = "normal")
@@ -76,6 +75,11 @@ class Widget1():
         self.label4.place(x = 300, y = 170, width = 200, height = 22)
         self.text3 = Text(self.w1, font = tkinter.font.Font(family = "Verdana", size = 12), cursor = "arrow", state = "normal")
         self.text3.place(x = 800, y = 230, width = 400, height = 470)
+        self.button1_copy = Button(self.w1, text = "Get Emails", font = tkinter.font.Font(family = "Verdana", size = 12), cursor = "arrow", state = "normal")
+        self.button1_copy.place(x = 1030, y = 50, width = 200, height = 40)
+        self.button1_copy['command'] = self.search_email
+        self.vslider1 = Scale(self.w1, from_ = 0, to = 100, resolution = 1, orient = VERTICAL, font = tkinter.font.Font(family = "Calibri", size = 9), cursor = "arrow", state = "normal")
+        self.vslider1.place(x = 680, y = 240, width = 22, height = 453)
 
     def print_test(self):
         input = self.ltext1.get()
@@ -103,7 +107,6 @@ class Widget1():
             print(offSet)
             offSet += 68
             self.button_list.append(button)
-            
 
     def show_message(self, button):
         print(button)
