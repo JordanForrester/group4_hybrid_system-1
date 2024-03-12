@@ -54,8 +54,6 @@ class Widget1():
         self.button1 = Button(self.w1, text = "Search Email", font = tkinter.font.Font(family = "Verdana", size = 12), cursor = "arrow", state = "normal")
         self.button1.place(x = 800, y = 50, width = 200, height = 40)
         self.button1['command'] = self.search_email
-        self.resultbox = Text(self.w1, font = tkinter.font.Font(family = "Verdana", size = 12), cursor = "arrow", state = "normal")
-        self.resultbox.place(x = 300, y = 230, width = 400, height = 470)
         self.ltext1 = Entry(self.w1, font = tkinter.font.Font(family = "Verdana", size = 12), state = "normal")
         self.ltext1.place(x = 170, y = 50, width = 200, height = 40)
         self.label1 = Label(self.w1, text = "Keyword:", anchor='w', font = tkinter.font.Font(family = "Verdana", size = 12), cursor = "arrow", state = "normal")
@@ -78,8 +76,17 @@ class Widget1():
         self.button1_copy = Button(self.w1, text = "Get Emails", font = tkinter.font.Font(family = "Verdana", size = 12), cursor = "arrow", state = "normal")
         self.button1_copy.place(x = 1030, y = 50, width = 200, height = 40)
         self.button1_copy['command'] = self.search_email
-        self.vslider1 = Scale(self.w1, from_ = 0, to = 100, resolution = 1, orient = VERTICAL, font = tkinter.font.Font(family = "Calibri", size = 9), cursor = "arrow", state = "normal")
-        self.vslider1.place(x = 680, y = 240, width = 22, height = 453)
+        self.resultbox = Listbox(self.w1, font = tkinter.font.Font(family = "Segoe UI", size = 9), cursor = "arrow", state = "normal")
+        self.resultbox.place(x = 320, y = 230, width = 420, height = 430)
+        self.prevButton = Button(self.w1, text = "Previous", font = tkinter.font.Font(family = "Calibri", size = 9), cursor = "arrow", state = "normal")
+        self.prevButton.place(x = 320, y = 670, width = 120, height = 42)
+        self.prevButton['command'] = self.list_previous
+        self.prevButton_copy = Button(self.w1, text = "Next", font = tkinter.font.Font(family = "Calibri", size = 9), cursor = "arrow", state = "normal")
+        self.prevButton_copy.place(x = 620, y = 670, width = 120, height = 42)
+        self.prevButton_copy['command'] = self.list_next
+        self.text5 = Text(self.w1, font = tkinter.font.Font(family = "Calibri", size = 9), cursor = "arrow", state = "normal")
+        self.text5.place(x = 1030, y = 110, width = 200, height = 30)
+        self.text5.insert(INSERT, "Enter number of emails to get")
 
     def print_test(self):
         input = self.ltext1.get()
@@ -94,19 +101,8 @@ class Widget1():
 
     def search_email(self):
         input = self.ltext1.get()
-        global entrylist
         entrylist = searchMessages(input)
-        offSet = 0
-        
-        for email in entrylist:
-            print(email)
-            button = Button(self.w1, text = "Subject: " + email.subject + " Sender: " + email.sender, bg = "#e6e6e6", font = tkinter.font.Font(family = "Bahnschrift Light", size = 8), cursor = "arrow", state = "normal",)
-            button.place(x = 300, y = (230 + offSet), width = 400, height = 62)
-            button['command'] = lambda b = button: self.show_message(b)
-            button._name = email.id
-            print(offSet)
-            offSet += 68
-            self.button_list.append(button)
+        displayResults()
 
     def show_message(self, button):
         print(button)
@@ -114,6 +110,38 @@ class Widget1():
             if button._name == email.id:
                 window = emaildisplay(0, email)
                 break
+
+    def list_previous(self):
+        if listIndex <= 0:
+            list_clear()
+            listIndex -= 10
+            displayResults()
+
+    def list_next(self):
+            
+            if listIndex <= len(entrylist):
+                list_clear()
+                displayResults()
+
+    def list_clear(self):
+        for x in self.button_list:
+            x.destroy()
+            
+   def displayResults(self):                         
+       offSet = 0
+       for email in range(listIndex, listIndex + 11):
+            print(email)
+            button =   Button(self.resultbox, text = "Subject: " + entrylist[email]..subject + " Sender: " + entrylist[email].sender, bg = "#e6e6e6",font =tkinter.font.Font(family = "Bahnschrift Light", size = 8), cursor = "arrow", state = "normal",)
+            button.place(x = 5, y = (20 + offSet), width = 400, height = 62)
+            button['command'] = lambda b = button: self.show_message(b)
+            button._name = entrylist[email].id
+            print(offSet) 
+            offSet += 68
+            self.button_list.append(button)
+            listIndex++
+        
+            
+        
                     
             
                 
