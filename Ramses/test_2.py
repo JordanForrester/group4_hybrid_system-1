@@ -38,6 +38,9 @@ class emaildisplay():
         self.tolabel.place(x = 0, y = 70, width = 500, height = 32)
 
 class Widget1():
+    
+    listIndex = 0
+    entrylist = []
     def __init__(self, parent):
         self.gui(parent)
         self.button_list = []
@@ -101,44 +104,45 @@ class Widget1():
 
     def search_email(self):
         input = self.ltext1.get()
-        entrylist = searchMessages(input)
-        displayResults()
+        self.entrylist = searchMessages(input)
+        self.listIndex = 0
+        self.displayResults()
 
     def show_message(self, button):
         print(button)
-        for email in entrylist: #Find a better way to get the button we need
+        for email in self.entrylist: #Find a better way to get the button we need
             if button._name == email.id:
                 window = emaildisplay(0, email)
                 break
 
     def list_previous(self):
-        if listIndex <= 0:
-            list_clear()
+        if self.listIndex <= 0:
+            self.list_clear()
             listIndex -= 10
-            displayResults()
+            self.displayResults()
 
     def list_next(self):
             
-            if listIndex <= len(entrylist):
-                list_clear()
-                displayResults()
+            if self.listIndex <= len(self.entrylist):
+                self.list_clear()
+                self.displayResults()
 
     def list_clear(self):
         for x in self.button_list:
             x.destroy()
             
-   def displayResults(self):                         
-       offSet = 0
-       for email in range(listIndex, listIndex + 11):
+    def displayResults(self):                         
+        offSet = 0
+        for email in range(self.listIndex, self.listIndex + 11):
             print(email)
-            button =   Button(self.resultbox, text = "Subject: " + entrylist[email]..subject + " Sender: " + entrylist[email].sender, bg = "#e6e6e6",font =tkinter.font.Font(family = "Bahnschrift Light", size = 8), cursor = "arrow", state = "normal",)
+            button =   Button(self.resultbox, text = "Subject: " + self.entrylist[email].subject + " Sender: " + self.entrylist[email].sender, bg = "#e6e6e6",font =tkinter.font.Font(family = "Bahnschrift Light", size = 8), cursor = "arrow", state = "normal",)
             button.place(x = 5, y = (20 + offSet), width = 400, height = 62)
             button['command'] = lambda b = button: self.show_message(b)
-            button._name = entrylist[email].id
+            button._name = self.entrylist[email].id
             print(offSet) 
             offSet += 68
             self.button_list.append(button)
-            listIndex++
+            self.listIndex = self.listIndex + 1
         
             
         
