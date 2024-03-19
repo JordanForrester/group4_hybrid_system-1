@@ -103,7 +103,7 @@ class Widget1():
         root.destroy()  # Close the Tkinter window after selecting the directory
 
     def search_email(self):
-        input = self.text5.get()
+        input = self.ltext1.get()
         count = self.button1_copy
         self.entrylist = searchMessages(input, count)
         self.listIndex = 0
