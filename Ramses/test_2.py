@@ -104,8 +104,8 @@ class Widget1():
 
     def search_email(self):
         input = self.ltext1.get()
-        count = self.button1_copy
-        self.entrylist = searchMessages(input, count)
+        #count = self.button1_copy
+        self.entrylist = searchMessages(input)
         self.listIndex = 0
         self.displayResults()
 
