@@ -103,8 +103,9 @@ class Widget1():
         root.destroy()  # Close the Tkinter window after selecting the directory
 
     def search_email(self):
-        input = self.ltext1.get()
-        self.entrylist = searchMessages(input)
+        input = self.text5.get()
+        count = self.button1_copy
+        self.entrylist = searchMessages(input, count)
         self.listIndex = 0
         self.displayResults()
 
@@ -116,24 +117,26 @@ class Widget1():
                 break
 
     def list_previous(self):
-        if self.listIndex <= 0:
-            self.list_clear()
-            listIndex -= 10
+        if self.listIndex >= 10:
+            
+            
+            self.listIndex = self.listIndex - 10
             self.displayResults()
 
     def list_next(self):
             
             if self.listIndex <= len(self.entrylist):
-                self.list_clear()
+                
                 self.displayResults()
 
     def list_clear(self):
         for x in self.button_list:
             x.destroy()
             
-    def displayResults(self):                         
+    def displayResults(self):  
+        self.list_clear()                       
         offSet = 0
-        for email in range(self.listIndex, self.listIndex + 11):
+        for email in range(self.listIndex, self.listIndex + 6):
             print(email)
             button =   Button(self.resultbox, text = "Subject: " + self.entrylist[email].subject + " Sender: " + self.entrylist[email].sender, bg = "#e6e6e6",font =tkinter.font.Font(family = "Bahnschrift Light", size = 8), cursor = "arrow", state = "normal",)
             button.place(x = 5, y = (20 + offSet), width = 400, height = 62)
