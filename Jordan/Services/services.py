@@ -8,9 +8,9 @@ CONST_GMAIL_API = get_Service()
 
 
 
-def searchMessages(search):
+def searchMessages(search, count):
     
-    return(storeMessages((CONST_GMAIL_API.users().messages().list(userId='me', q = search).execute())))
+    return(storeMessages((CONST_GMAIL_API.users().messages().list(userId='me', q = search, maxResults = count).execute())))
 
 
 
