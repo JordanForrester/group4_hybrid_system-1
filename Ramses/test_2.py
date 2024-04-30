@@ -123,8 +123,6 @@ class Widget1():
 
     def list_previous(self):
         if self.listIndex >= 10:
-            
-            
             self.listIndex = self.listIndex - 10
             self.displayResults()
 
